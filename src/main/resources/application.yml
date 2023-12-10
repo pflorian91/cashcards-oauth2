@@ -1,0 +1,35 @@
+# App
+
+server:
+  port: 8068
+
+logging.level:
+  com.webgenerals.cashcards: DEBUG
+  org.springframework.security: TRACE
+  org.hibernate.SQL: DEBUG
+  org.springframework.jdbc: DEBUG
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:authz.pub
+          audiences: cashcard-client
+
+spring.datasource.url: jdbc:h2:mem:cashcardsdb
+spring.h2.console.enabled: true
+spring.datasource.username: sa
+spring.datasource.password: password
+
+#spring.datasource.driverClassName: org.h2.Driver
+#spring.datasource.username: sa
+#spring.datasource.password: password
+#spring.sql.init.mode: always
+#spring.jpa.defer-datasource-initialization: true
+#spring.jpa.hibernate.ddl-auto: none
+#
+#spring.h2.console.enabled: true
+#spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+#
+#spring.jpa.show-sql: true
