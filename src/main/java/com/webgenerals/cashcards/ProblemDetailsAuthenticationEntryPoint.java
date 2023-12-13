@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.jwt.JwtValidationException;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URI;
 
+@Slf4j
 @Component
 public class ProblemDetailsAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
 	private final AuthenticationEntryPoint delegate = new BearerTokenAuthenticationEntryPoint();
 
 	private final ObjectMapper mapper;
@@ -28,6 +31,8 @@ public class ProblemDetailsAuthenticationEntryPoint implements AuthenticationEnt
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
 			throws IOException, ServletException {
 		this.delegate.commence(request, response, authException);
+
+		log.error("Auth error: ", authException);
 
 		if (authException.getCause() instanceof JwtValidationException validation) {
 			ProblemDetail detail = ProblemDetail.forStatus(401);

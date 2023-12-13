@@ -35,11 +35,13 @@ public class CashCardController {
 				.path("cashcards/{id}")
 				.buildAndExpand(savedCashCard.id())
 				.toUri();
+
 		return ResponseEntity.created(locationOfNewCashCard).body(savedCashCard);
 	}
 
 	@GetMapping
 	public ResponseEntity<Iterable<CashCard>> findAll() {
+		// only in controllers (@CurrentSecurityContext(expression = "authentication.principal") Jwt jwt)
 		return ResponseEntity.ok(this.cashCardRepository.findAll());
 	}
 }

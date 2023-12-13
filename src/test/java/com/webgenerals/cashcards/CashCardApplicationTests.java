@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "sarah1", authorities = {"SCOPE_cashcard:read", "SCOPE_cashcard:write"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class CashCardApplicationTests {
 
 	@Autowired
